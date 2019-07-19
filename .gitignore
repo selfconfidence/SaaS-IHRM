@@ -13,7 +13,7 @@
 *.iml
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
+*.传统资料/**
 # Package Files #
 *.jar
 *.war
