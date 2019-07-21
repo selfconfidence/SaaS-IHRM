@@ -20,8 +20,7 @@ public class ProcessDefinitionDelete {
     public static void main(String[] args) {
         ProcessEngine defaultProcessEngine = ProcessEngines.getDefaultProcessEngine();
         RepositoryService repositoryService = defaultProcessEngine.getRepositoryService();
-       // repositoryService.deleteDeployment("1",true);   //建议管理员删除, 这是强制删除一个执行中的流程,删除所有关于流程的节点信息.
-        repositoryService.deleteDeployment("10001");// 删除一个刚部署还未启动流程的节点流程
-
+        repositoryService.deleteDeployment("12501",true);   //建议管理员删除, 这是强制删除一个执行中的流程,删除所有关于流程的节点信息.
+       // repositoryService.deleteDeployment("10001");// 删除一个刚部署还未启动流程的节点流程
     }
 }
