@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>BPMN_2_0</ID>
+  <OriginalElement>flowPath=H:/beidaSoftCode/SaaS-IHRM/act_quick/src/main/resources/diagram/gateway/parallel.xml</OriginalElement>
+  <nodes>
+    <node x="113.25" y="84.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55684</node>
+    <node x="97.75" y="252.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TParallelGateway @55724</node>
+    <node x="114.25" y="0.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TStartEvent @55681</node>
+    <node x="97.75" y="440.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TParallelGateway @55708</node>
+    <node x="10.0" y="346.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55700</node>
+    <node x="144.0" y="346.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55695</node>
+    <node x="107.25" y="168.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55690</node>
+    <node x="116.75" y="524.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TEndEvent @55705</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55695" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TParallelGateway @55708">
+      <point x="0.0" y="15.0" />
+      <point x="30.75" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TStartEvent @55681" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55684">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55690" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TParallelGateway @55724">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55700" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TParallelGateway @55708">
+      <point x="0.0" y="15.0" />
+      <point x="62.0" y="420.0" />
+      <point x="128.5" y="420.0" />
+      <point x="-30.75" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TParallelGateway @55708" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TEndEvent @55705">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TParallelGateway @55724" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55700">
+      <point x="-30.75" y="15.0" />
+      <point x="128.5" y="292.0" />
+      <point x="62.0" y="292.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TParallelGateway @55724" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55695">
+      <point x="30.75" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55684" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55690">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="123.0" y="277.0" />
+  <SelectedNodes>
+    <node>interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @55684</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Details</Category>
+  </Categories>
+</Diagram>
+

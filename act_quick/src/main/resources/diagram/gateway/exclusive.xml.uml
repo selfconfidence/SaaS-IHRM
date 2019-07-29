@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>BPMN_2_0</ID>
+  <OriginalElement>flowPath=H:/beidaSoftCode/SaaS-IHRM/act_quick/src/main/resources/diagram/gateway/exclusive.xml</OriginalElement>
+  <nodes>
+    <node x="61.0" y="168.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TExclusiveGateway @63866</node>
+    <node x="61.0" y="356.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TExclusiveGateway @63890</node>
+    <node x="10.0" y="262.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @63859</node>
+    <node x="120.0" y="262.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @63855</node>
+    <node x="81.0" y="84.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @63851</node>
+    <node x="82.0" y="0.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TStartEvent @63848</node>
+    <node x="84.5" y="440.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TEndEvent @63863</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @63855" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TExclusiveGateway @63890">
+      <point x="0.0" y="15.0" />
+      <point x="33.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TExclusiveGateway @63866" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @63855">
+      <point x="33.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TStartEvent @63848" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @63851">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TExclusiveGateway @63890" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TEndEvent @63863">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TExclusiveGateway @63866" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @63859">
+      <point x="-33.0" y="15.0" />
+      <point x="94.0" y="208.0" />
+      <point x="50.0" y="208.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @63859" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TExclusiveGateway @63890">
+      <point x="0.0" y="15.0" />
+      <point x="50.0" y="336.0" />
+      <point x="94.0" y="336.0" />
+      <point x="-33.0" y="-15.0" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @63851" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TExclusiveGateway @63866">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="105.0" y="235.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Details</Category>
+  </Categories>
+</Diagram>
+
