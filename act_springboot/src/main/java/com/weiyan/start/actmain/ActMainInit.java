@@ -7,13 +7,11 @@ import org.activiti.api.runtime.shared.query.Page;
 import org.activiti.api.runtime.shared.query.Pageable;
 import org.activiti.api.task.model.Task;
 import org.activiti.api.task.model.builders.TaskPayloadBuilder;
-import org.activiti.api.task.model.payloads.ClaimTaskPayload;
 import org.activiti.api.task.runtime.TaskRuntime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -51,7 +49,7 @@ public class ActMainInit {
     public void taskQuery(){
         //这句话是主要的,拾取任务以及完成任务都是根据当前用户进行操作的
         securityUtils.logInAs("other");
-        //查询任务
+        //查询任务                                              //根据指定的用户组去管理
         Task task = taskRuntime.create(TaskPayloadBuilder.create().withGroup("activitiTeam").build());
         //拾取任务
         taskRuntime.claim(TaskPayloadBuilder.claim().withTaskId(task.getId()).build());
