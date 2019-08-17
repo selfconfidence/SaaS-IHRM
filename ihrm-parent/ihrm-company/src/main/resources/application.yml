@@ -9,7 +9,7 @@ spring:
   #2.数据库连接池
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.238.166:3306/saas_ihrm?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://192.168.47.128:3306/saas_ihrm?useUnicode=true&characterEncoding=utf8
     username: root
     password: 12345
   #3.JPA

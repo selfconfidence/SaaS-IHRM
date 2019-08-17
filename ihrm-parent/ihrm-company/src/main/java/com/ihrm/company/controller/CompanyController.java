@@ -35,7 +35,7 @@ public class CompanyController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    public Result save(@PathVariable String id){
+    public Result delete(@PathVariable String id){
         compayService.deleteById(id);
         return new Result(ResultCode.SUCCESS);
     }
