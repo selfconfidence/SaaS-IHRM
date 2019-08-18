@@ -37,6 +37,8 @@ public class DepartmentController extends BaseController {
 
     @RequestMapping(value = "/department",method = RequestMethod.POST)
     public Result save(@RequestBody Department Department){
+        //固定好公司值传递
+
         departmentService.save(Department);
         return new Result(ResultCode.SUCCESS);
     }
