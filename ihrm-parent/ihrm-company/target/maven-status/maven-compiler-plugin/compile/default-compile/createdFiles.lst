@@ -1,0 +1,7 @@
+com\ihrm\company\service\DepartmentService.class
+com\ihrm\company\controller\DepartmentController.class
+com\ihrm\company\service\CompanyService.class
+com\ihrm\company\CompanyApplication.class
+com\ihrm\company\dao\DepartmentDao.class
+com\ihrm\company\controller\CompanyController.class
+com\ihrm\company\dao\CompanyDao.class

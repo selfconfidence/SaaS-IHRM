@@ -1,14 +1,20 @@
 package com.ihrm.common.utils;
+
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author mister_wei
  * @version 1.1.1
@@ -25,6 +31,9 @@ public class OssFileOptions  {
     private static String bucket=null;
     private static String uri= null;
     private static OSS oss = null;
+    private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5,20,200, TimeUnit.MINUTES,new LinkedBlockingDeque<Runnable>(5));
+
+
     static {
         Properties properties = new Properties();
         try {
@@ -66,17 +75,18 @@ public class OssFileOptions  {
             /*File file = new File("C:\\Users\\Administrator\\Pictures\\Feedback\\{3AD8DD58-BEBF-4870-BF3D-DDADAC24A22C}\\Capture001.png");
             InputStream inputStream = new FileInputStream(file);*/
             //不影响主业务流程
-            new Thread(() ->{
-                oss.putObject(bucket,  fileLocal, inputStream,meta);
-                try {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
+         threadPoolExecutor.execute(() ->{
+             oss.putObject(bucket,  fileLocal, inputStream,meta);
+             try {
+                 if (inputStream != null) {
+                     inputStream.close();
+                 }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+         });
+
 
 
             resultMap.put("uri",uri+fileLocal);
@@ -85,10 +95,11 @@ public class OssFileOptions  {
             e.printStackTrace();
             return null;
         }finally {
-
+          threadPoolExecutor.shutdown();
         }
         return resultMap;
  }
+
 
  //下载阿里OSS文件到本地
     public static void fileOssToLoca(String fileName,File file){

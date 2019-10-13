@@ -1,0 +1,9 @@
+com\ihrm\domain\User.class
+com\ihrm\domain\PermissionMenu.class
+com\ihrm\domain\Department.class
+com\ihrm\domain\response\DeptListResult.class
+com\ihrm\domain\Company.class
+com\ihrm\domain\Permission.class
+com\ihrm\domain\PermissionPoint.class
+com\ihrm\domain\PermissionApi.class
+com\ihrm\domain\Role.class

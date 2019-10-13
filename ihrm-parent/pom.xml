@@ -13,6 +13,7 @@
         <module>ihrm-common</module>
         <module>ihrm-domain</module>
         <module>ihrm-company</module>
+        <module>ihrm-system</module>
     </modules>
 
 
