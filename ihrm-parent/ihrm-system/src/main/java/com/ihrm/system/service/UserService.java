@@ -1,7 +1,9 @@
 package com.ihrm.system.service;
 
 import com.ihrm.common.utils.IdWorker;
+import com.ihrm.domain.Role;
 import com.ihrm.domain.User;
+import com.ihrm.system.dao.RoleDao;
 import com.ihrm.system.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,61 +28,63 @@ import java.util.*;
 @Transactional(rollbackFor = Exception.class)
 public class UserService {
 
-
     @Autowired
     private UserDao userDao;
 
     @Autowired
     private IdWorker idWorker;
 
+    @Autowired
+    private RoleDao roleDao;
+
     /**
-     *  根据ID查询
+     * 根据ID查询
      */
-    public User findById(String id){
-        return   userDao.findById(id).get();
+    public User findById(String id) {
+        return userDao.findById(id).get();
     }
 
     /**
      * 根据查询所有用户并分页
      */
-    public Page<User> findAll(int page, int size, Map<String,Object> map){
+    public Page<User> findAll(int page, int size, Map<String, Object> map) {
         Specification<User> specification = new Specification<User>() {
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> listPredicate = new ArrayList<>();
                 // 查询条件 企业ID companyId
-                if (!StringUtils.isEmpty(map.get("companyId"))){
-                    listPredicate.add(criteriaBuilder.equal(root.get("companyId").as(String.class),map.get("companyId")));
+                if (!StringUtils.isEmpty(map.get("companyId"))) {
+                    listPredicate.add(criteriaBuilder.equal(root.get("companyId").as(String.class), map.get("companyId")));
                 }
                 //departmentId
-                if (!StringUtils.isEmpty(map.get("departmentId"))){
-                    listPredicate.add(criteriaBuilder.equal(root.get("departmentId").as(String.class),map.get("departmentId")));
+                if (!StringUtils.isEmpty(map.get("departmentId"))) {
+                    listPredicate.add(criteriaBuilder.equal(root.get("departmentId").as(String.class), map.get("departmentId")));
                 }
                 //hasDept    //根据请求的hasDept判断  是否分配部门 0未分配（departmentId = null），1 已分配 （departmentId ！= null）
-                 if (!StringUtils.isEmpty(map.get("hasDept"))){
+                if (!StringUtils.isEmpty(map.get("hasDept"))) {
                     //不是null
-                     if ("0".equals(map.get("hasDept"))){
-                         //未分配
-                         listPredicate.add(criteriaBuilder.isNull(root.get("departmentId")));
-                     }else {
-                         //已经分配
-                         listPredicate.add(criteriaBuilder.isNotNull(root.get("departmentId")));
+                    if ("0".equals(map.get("hasDept"))) {
+                        //未分配
+                        listPredicate.add(criteriaBuilder.isNull(root.get("departmentId")));
+                    } else {
+                        //已经分配
+                        listPredicate.add(criteriaBuilder.isNotNull(root.get("departmentId")));
 
-                     }
-                 }
+                    }
+                }
 
                 return criteriaBuilder.and(listPredicate.toArray(new Predicate[listPredicate.size()]));
             }
         };
 
-        return userDao.findAll(specification,new PageRequest(page - 1,size));
+        return userDao.findAll(specification, new PageRequest(page - 1, size));
     }
 
     /**
      * 更新用户列表
      */
-    public void update(String id,User user){
-        User userResult = userDao.findById(id).get();
+    public void update(String id, User user) {
+        User userResult = userDao.findById(user.getId()).get();
         //2.设置用户属性
         userResult.setUsername(user.getUsername());
         userResult.setPassword(user.getPassword());
@@ -94,13 +98,15 @@ public class UserService {
      * 删除部门
      */
 
-    public void deleteById(String id ){userDao.deleteById(id);}
+    public void deleteById(String id) {
+        userDao.deleteById(id);
+    }
 
     /**
      * 保存部门
      */
 
-    public void save(User user ){
+    public void save(User user) {
         user.setId(idWorker.nextId());
         //设置属性
         //默认密码
@@ -109,5 +115,26 @@ public class UserService {
         user.setEnableState(1);
         user.setCreateTime(new Date());
 
-        userDao.save(user);}
+        userDao.save(user);
+    }
+
+    public void assignRoles(String userId, List<String> roleIds) {
+        //1.根据id查询用户
+        User user = userDao.findById(userId).get();
+        //2.设置用户的角色集合
+        Set<Role> roles = new HashSet<>();
+        for (String roleId : roleIds) {
+            Role role = roleDao.findById(roleId).get();
+            roles.add(role);
+        }
+        //设置用户和角色集合的关系
+        user.setRoles(roles);
+        //3.更新用户
+        userDao.save(user);
+    }
+
+    public User findByPhone(String phone) {
+
+        return userDao.findByMobile(phone);
+    }
 }

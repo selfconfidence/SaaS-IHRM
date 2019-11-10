@@ -6,5 +6,17 @@ spring:
   #1.应用配置
   application:
     name: ihrm-soket #指定服务名
+  #2.数据库连接池
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: 2F3hBOMvJxv5itVOq58p0rdSPD3WQf5vrSCHg3kIw7mwo/yx3NRrjOFs8YKMoTaAzW0j62+9/oPd51o2kWtJcCv/Ycd+U5b+8osj9/rhEWI=
+    username: GCG6Bhb7YDT7j7/EwhOnWg==
+    password: F/VYJ2nv8Za8CVWtZ5GTEA==
+    type: com.ihrm.system.enpyt.DriverSource
+
+
+
+
+
 
 

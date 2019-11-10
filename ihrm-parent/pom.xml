@@ -14,6 +14,7 @@
         <module>ihrm-domain</module>
         <module>ihrm-company</module>
         <module>ihrm-system</module>
+        <module>ihrm-soket</module>
     </modules>
 
 

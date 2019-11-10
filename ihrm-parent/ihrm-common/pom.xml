@@ -31,8 +31,9 @@
     <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt</artifactId>
-        <version>0.6.0</version>
+        <version>0.9.1</version>
     </dependency>
+
 
     <!-- 关于阿里云对文件系统存储的SDK -->
     <dependency>

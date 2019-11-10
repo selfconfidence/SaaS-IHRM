@@ -10,4 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * @mailbox mynameisweiyan@gmail.com
  */
 public interface UserDao extends JpaRepository<User,String>,JpaSpecificationExecutor<User> {
+
+     User findByMobile(String mobile);
+
 }
