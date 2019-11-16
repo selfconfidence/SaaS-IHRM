@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 
 /**
  * @author misterWei
@@ -25,5 +26,14 @@ public class SystemApplication {
     @Bean
     public JwtUtils getJwtUtils(){
         return new JwtUtils();
+    }
+
+    /**
+     * 解决 JPA no session 问题
+     * @return
+     */
+    @Bean
+    public OpenEntityManagerInViewFilter getNoSession(){
+        return new OpenEntityManagerInViewFilter();
     }
 }

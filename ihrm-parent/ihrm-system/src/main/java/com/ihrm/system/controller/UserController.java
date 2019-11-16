@@ -6,16 +6,20 @@ import com.ihrm.common.entity.Result;
 import com.ihrm.common.entity.ResultCode;
 import com.ihrm.common.utils.BeanMapUtils;
 import com.ihrm.common.utils.JwtUtils;
+import com.ihrm.common.utils.PermissionConstants;
+import com.ihrm.domain.Permission;
+import com.ihrm.domain.Role;
 import com.ihrm.domain.User;
 import com.ihrm.domain.response.UserResult;
 import com.ihrm.system.result.UserInitResult;
+import com.ihrm.system.service.PermissionService;
 import com.ihrm.system.service.UserService;
-import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +38,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private PermissionService permissionService;
 
     /**
      * 分配角色
@@ -64,7 +71,7 @@ public class UserController extends BaseController {
         return new Result(ResultCode.SUCCESS);
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE,name = "API_USER_DELETE")
     public Result delete(@PathVariable String id) {
         userService.deleteById(id);
         return new Result(ResultCode.SUCCESS);
@@ -92,7 +99,20 @@ public class UserController extends BaseController {
         User user = userService.findByPhone(phone);
         if (user != null && user.getPassword().equals(password)) {
             //使用JWT生成密钥形式
-            String jwtToken = jwtUtils.createJWT(user.getId(), user.getUsername(), BeanMapUtils.beanToMap(user));
+            Map<String, Object> parMap = BeanMapUtils.beanToMap(user);
+            /**
+             * 需要API访问后端控制,需要加入token中
+             */
+            StringBuilder apis = new StringBuilder();
+            for (Role role : user.getRoles()) {
+                for (Permission permission : role.getPermissions()) {
+                    if (permission.getType() == PermissionConstants.PY_API) {
+                        apis.append(permission.getCode()).append(",");
+                    }
+                }
+            }
+             parMap.put("apis",apis.toString());
+            String jwtToken = jwtUtils.createJWT(user.getId(), user.getUsername(), parMap);
             return new Result(ResultCode.SUCCESS, jwtToken);
         }
         return new Result(ResultCode.USERAUTHERROR);
@@ -102,15 +122,31 @@ public class UserController extends BaseController {
      * 根据当前token 加载出用户的所有信息
      */
 
-    @RequestMapping(value = "/profit", method = RequestMethod.POST)
+    @RequestMapping(value = "/profile", method = RequestMethod.POST)
     public Result profit(HttpServletRequest request) {
         String authentication = request.getHeader("Authentication");
         if (authentication == null) {
             return new Result(ResultCode.UNAUTHENTICATED);
         }
-        Claims claims = jwtUtils.parseJWT(authentication.replace("Token ", ""));
         String id = (String) claims.get("id");
         User user = userService.findById(id);
-        return new Result(ResultCode.SUCCESS, new UserInitResult(user));
+        String level = user.getLevel();
+        Result result = null;
+        List<Permission> permissions = null;
+        //笃定是否是特定管理员
+        Map parMap = new HashMap();
+        if ("saasAdmin".equals(level)) {
+            //查询所有的权限控制
+            permissions = permissionService.findAll(parMap);
+            result = new Result(ResultCode.SUCCESS, new UserInitResult(user,permissions));
+        }else if ("coAdmin".equals(level)){
+            //查询企业特定的权限控制
+            parMap.put("enVisible",1);
+            permissions = permissionService.findAll(parMap);
+            result = new Result(ResultCode.SUCCESS, new UserInitResult(user,permissions));
+        }else {
+          result = new Result(ResultCode.SUCCESS, new UserInitResult(user));
+        }
+        return result;
     }
 }

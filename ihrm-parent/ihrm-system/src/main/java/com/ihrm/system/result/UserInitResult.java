@@ -1,15 +1,13 @@
 package com.ihrm.system.result;
 
 import com.ihrm.common.utils.PermissionConstants;
+import com.ihrm.domain.Permission;
 import com.ihrm.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author misterWei
@@ -33,7 +31,6 @@ public class UserInitResult {
         Set<String> points = new HashSet<>();
         Set<String> apis = new HashSet<>();
         user.getRoles().forEach(role -> {
-
             role.getPermissions().forEach(permission -> {
                 Integer type = permission.getType();
                 String id = permission.getId();
@@ -47,6 +44,33 @@ public class UserInitResult {
 
             });
         });
+        this.roles.put("menus",menus);
+        this.roles.put("points",points);
+        this.roles.put("apis",apis);
+
+    }
+
+    public UserInitResult(User user,List<Permission> perList) {
+        this.userName = user.getUsername();
+        this.mobile = user.getMobile();
+        this.company = user.getCompanyName();
+        Set<String> menus = new HashSet<>();
+        Set<String> points = new HashSet<>();
+        Set<String> apis = new HashSet<>();
+
+            perList.forEach(permission -> {
+                Integer type = permission.getType();
+                String id = permission.getId();
+                if (type.equals(PermissionConstants.PY_MENU)){
+                    menus.add(id);
+                }else if (type.equals(PermissionConstants.PY_POINT)){
+                    points.add(id);
+                }else if (type.equals(PermissionConstants.PY_API)){
+                    apis.add(id);
+                }
+
+            });
+
         this.roles.put("menus",menus);
         this.roles.put("points",points);
         this.roles.put("apis",apis);
