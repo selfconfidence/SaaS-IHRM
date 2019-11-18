@@ -1,5 +1,6 @@
 package com.ihrm.system;
 
+import com.ihrm.common.interceptor.JwtInterceptor;
 import com.ihrm.common.utils.IdWorker;
 import com.ihrm.common.utils.JwtUtils;
 import org.springframework.boot.SpringApplication;
@@ -35,5 +36,10 @@ public class SystemApplication {
     @Bean
     public OpenEntityManagerInViewFilter getNoSession(){
         return new OpenEntityManagerInViewFilter();
+    }
+
+    @Bean
+    public JwtInterceptor jwtInterceptor (){
+        return new JwtInterceptor();
     }
 }

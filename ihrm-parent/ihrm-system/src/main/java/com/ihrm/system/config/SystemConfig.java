@@ -2,15 +2,13 @@ package com.ihrm.system.config;
 
 import com.ihrm.common.interceptor.JwtInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
  * @author  Mister_wei
  */
-@Configuration
+/*@Configuration*/
 public class SystemConfig extends WebMvcConfigurationSupport {
 
     @Autowired
@@ -29,7 +27,7 @@ public class SystemConfig extends WebMvcConfigurationSupport {
                         excludePathPatterns("/sys/login", "/frame/register/**");
     }
 
-    @Override
+/*    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //重写这个方法，映射静态资源文件
         registry.addResourceHandler("/**")
@@ -37,5 +35,5 @@ public class SystemConfig extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/static/")
                 .addResourceLocations("classpath:/public/");
         super.addResourceHandlers(registry);
-    }
+    }*/
 }

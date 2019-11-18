@@ -95,9 +95,9 @@ public class UserController extends BaseController {
      * 用户登陆
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Result login(String phone, String password) {
-        User user = userService.findByPhone(phone);
-        if (user != null && user.getPassword().equals(password)) {
+    public Result login(@RequestBody User userP) {
+        User user = userService.findByPhone(userP.getMobile());
+        if (user != null && user.getPassword().equals(userP.getPassword())) {
             //使用JWT生成密钥形式
             Map<String, Object> parMap = BeanMapUtils.beanToMap(user);
             /**
@@ -124,10 +124,6 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
     public Result profit(HttpServletRequest request) {
-        String authentication = request.getHeader("Authentication");
-        if (authentication == null) {
-            return new Result(ResultCode.UNAUTHENTICATED);
-        }
         String id = (String) claims.get("id");
         User user = userService.findById(id);
         String level = user.getLevel();

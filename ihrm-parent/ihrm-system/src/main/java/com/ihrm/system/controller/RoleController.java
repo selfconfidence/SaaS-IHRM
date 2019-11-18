@@ -9,10 +9,12 @@ import com.ihrm.domain.response.RoleResult;
 import com.ihrm.system.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/sys")
@@ -22,6 +24,14 @@ public class RoleController extends BaseController{
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    RedisTemplate redisTemplate;
+
+    @RequestMapping(value = "expiration",method = RequestMethod.GET)
+   public Result expiration(){
+        redisTemplate.opsForValue().set("sadasda","222",10, TimeUnit.SECONDS);
+        return new Result(ResultCode.SUCCESS);
+    }
     /**
      * 分配权限
      */
