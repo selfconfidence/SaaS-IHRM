@@ -7,7 +7,6 @@ import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @create 2019年11月17号:00点32分
  * @mailbox mynameisweiyan@gmail.com
  */
-@Component
+/*@Component*/
 public class JwtInterceptor extends HandlerInterceptorAdapter{
 
     private final static  Logger logger = LoggerFactory.getLogger(JwtInterceptor.class);
@@ -38,14 +37,14 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String authentication = request.getHeader("Authentication");
-        if (!StringUtils.isEmpty(authentication) && authentication.startsWith("Token")) {
+        String authentication = request.getHeader("Authorization");
+        if (!StringUtils.isEmpty(authentication) && authentication.startsWith("Bearer")) {
             /**
              * 进行解析
              */
             try {
 
-                Claims claims = jwtUtils.parseJWT(authentication.replace("Token ", ""));
+                Claims claims = jwtUtils.parseJWT(authentication.replace("Bearer ", ""));
                 /**
                  * 根据当前访问的用户所API,查询该用户是否有权限访问,健全到 RequestMapping 中的标识信息name
                  */

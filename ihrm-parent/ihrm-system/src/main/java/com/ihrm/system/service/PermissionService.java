@@ -4,7 +4,7 @@ import com.ihrm.common.entity.ResultCode;
 import com.ihrm.common.exception.CommonException;
 import com.ihrm.common.utils.BeanMapUtils;
 import com.ihrm.common.utils.IdWorker;
-import com.ihrm.common.utils.PermissionConstants;
+import com.ihrm.domain.PermissionConstants;
 import com.ihrm.domain.Permission;
 import com.ihrm.domain.PermissionApi;
 import com.ihrm.domain.PermissionMenu;

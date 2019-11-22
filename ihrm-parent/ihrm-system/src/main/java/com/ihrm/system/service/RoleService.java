@@ -2,7 +2,7 @@ package com.ihrm.system.service;
 
 import com.ihrm.common.service.BaseService;
 import com.ihrm.common.utils.IdWorker;
-import com.ihrm.common.utils.PermissionConstants;
+import com.ihrm.domain.PermissionConstants;
 import com.ihrm.domain.Permission;
 import com.ihrm.domain.Role;
 import com.ihrm.system.dao.PermissionDao;

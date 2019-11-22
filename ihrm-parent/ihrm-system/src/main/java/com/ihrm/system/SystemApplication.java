@@ -14,7 +14,7 @@ import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
  * @create 2019年09月14号:19点33分
  * @mailbox mynameisweiyan@gmail.com
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.ihrm"})
 @EntityScan("com.ihrm.domain")
 public class SystemApplication {
     public static void main(String[] args) {

@@ -3,8 +3,9 @@ package com.ihrm.company.controller;
 import com.ihrm.common.entity.PageResult;
 import com.ihrm.common.entity.Result;
 import com.ihrm.common.entity.ResultCode;
-import com.ihrm.domain.Company;
 import com.ihrm.company.service.CompanyService;
+import com.ihrm.domain.Company;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +48,7 @@ public class CompanyController {
     }
 
     @RequestMapping(value = "/{page}/{size}",method = RequestMethod.POST)
+    @RequiresPermissions({"API-LOOK-COMPANY-LIST_ADMIN","自定义权限"})
     public PageResult findByPageList(@PathVariable("page")int page,@PathVariable("size")int size,@RequestBody Company company){
        return compayService.findByPageList(company,(page -1)*size,size);
     }

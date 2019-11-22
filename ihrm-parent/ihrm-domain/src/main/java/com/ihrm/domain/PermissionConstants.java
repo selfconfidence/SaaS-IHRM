@@ -1,4 +1,4 @@
-package com.ihrm.common.utils;
+package com.ihrm.domain;
 
 public class PermissionConstants {
     /**

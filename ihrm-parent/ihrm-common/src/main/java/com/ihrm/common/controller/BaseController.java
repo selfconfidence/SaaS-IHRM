@@ -1,6 +1,8 @@
 package com.ihrm.common.controller;
 
-import io.jsonwebtoken.Claims;
+import com.ihrm.domain.response.UserInitResult;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +18,6 @@ public class BaseController {
     protected HttpServletResponse response;
     protected String companyId;
     protected String companyName;
-    protected Claims claims;
 
     /**
      *
@@ -29,12 +30,16 @@ public class BaseController {
         this.request = request;
         this.response = response;
         /**
-         * 目前使用 companyId = 1
-         *         companyName = "Saas企业固定测试多租户"
+         *  // 获取到安全数据
          */
-        this.claims = (Claims)request.getAttribute("user_claims");
-        this.companyId = (String) claims.get("companyId");
-        this.companyName = (String) claims.get("companyName");
+        PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
+        if (principals != null && !principals.isEmpty()){
+          UserInitResult userInitResult = (UserInitResult) principals.getPrimaryPrincipal();
+          this.companyId = userInitResult.getCompanyId();
+          this.companyName = userInitResult.getCompany();
+        }
+
+
     }
 
 }

@@ -12,6 +12,8 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
  * @create 2019年11月18号:19点25分
  * @mailbox mynameisweiyan@gmail.com
  */
+/*@Configuration
+@ComponentScan(basePackageClasses = )*/
 @Configuration
 public class RedisListenerConfig {
 

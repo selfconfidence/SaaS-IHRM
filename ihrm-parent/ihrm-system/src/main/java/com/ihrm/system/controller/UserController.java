@@ -4,22 +4,20 @@ import com.ihrm.common.controller.BaseController;
 import com.ihrm.common.entity.PageResult;
 import com.ihrm.common.entity.Result;
 import com.ihrm.common.entity.ResultCode;
-import com.ihrm.common.utils.BeanMapUtils;
 import com.ihrm.common.utils.JwtUtils;
-import com.ihrm.common.utils.PermissionConstants;
-import com.ihrm.domain.Permission;
-import com.ihrm.domain.Role;
 import com.ihrm.domain.User;
 import com.ihrm.domain.response.UserResult;
-import com.ihrm.system.result.UserInitResult;
 import com.ihrm.system.service.PermissionService;
 import com.ihrm.system.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,12 +64,11 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public Result save(@RequestBody User user) {
         //固定好公司值传递
-
         userService.save(user);
         return new Result(ResultCode.SUCCESS);
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE,name = "API_USER_DELETE")
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE, name = "API_USER_DELETE")
     public Result delete(@PathVariable String id) {
         userService.deleteById(id);
         return new Result(ResultCode.SUCCESS);
@@ -96,13 +93,30 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Result login(@RequestBody User userP) {
-        User user = userService.findByPhone(userP.getMobile());
+        /**
+         * JWT更换 使用Shiro 自定义Session方式实现Realm 域实现
+         */
+        /**
+         * Md5Hash 参数说明 1 .加密的数据 2 .盐值  3.加密次数
+         */
+        String password = new Md5Hash(userP.getPassword(), userP.getMobile(), 3).toString();
+        try {
+            UsernamePasswordToken upToken = new UsernamePasswordToken(userP.getMobile(), password);
+            Subject shiroSubject = SecurityUtils.getSubject();
+            shiroSubject.login(upToken);
+            String token = (String) shiroSubject.getSession().getId();
+            return new Result(ResultCode.SUCCESS,token);
+        } catch (Exception e) {
+            return new Result(ResultCode.USERAUTHERROR);
+        }
+
+  /*      User user = userService.findByPhone(userP.getMobile());
         if (user != null && user.getPassword().equals(userP.getPassword())) {
             //使用JWT生成密钥形式
             Map<String, Object> parMap = BeanMapUtils.beanToMap(user);
-            /**
-             * 需要API访问后端控制,需要加入token中
-             */
+            *//**
+         * 需要API访问后端控制,需要加入token中
+         *//*
             StringBuilder apis = new StringBuilder();
             for (Role role : user.getRoles()) {
                 for (Permission permission : role.getPermissions()) {
@@ -114,8 +128,7 @@ public class UserController extends BaseController {
              parMap.put("apis",apis.toString());
             String jwtToken = jwtUtils.createJWT(user.getId(), user.getUsername(), parMap);
             return new Result(ResultCode.SUCCESS, jwtToken);
-        }
-        return new Result(ResultCode.USERAUTHERROR);
+        }*/
     }
 
     /**
@@ -124,7 +137,10 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
     public Result profit(HttpServletRequest request) {
-        String id = (String) claims.get("id");
+        Subject subject = SecurityUtils.getSubject();
+        Object userInitResult = subject.getPrincipals().getPrimaryPrincipal();
+        return new Result(ResultCode.SUCCESS, userInitResult);
+        /*String id = (String) claims.get("id");
         User user = userService.findById(id);
         String level = user.getLevel();
         Result result = null;
@@ -134,15 +150,19 @@ public class UserController extends BaseController {
         if ("saasAdmin".equals(level)) {
             //查询所有的权限控制
             permissions = permissionService.findAll(parMap);
-            result = new Result(ResultCode.SUCCESS, new UserInitResult(user,permissions));
-        }else if ("coAdmin".equals(level)){
+            result = new Result(ResultCode.SUCCESS, new UserInitResult(user, permissions));
+        } else if ("coAdmin".equals(level)) {
             //查询企业特定的权限控制
-            parMap.put("enVisible",1);
+            parMap.put("enVisible", 1);
             permissions = permissionService.findAll(parMap);
-            result = new Result(ResultCode.SUCCESS, new UserInitResult(user,permissions));
-        }else {
-          result = new Result(ResultCode.SUCCESS, new UserInitResult(user));
-        }
-        return result;
+            result = new Result(ResultCode.SUCCESS, new UserInitResult(user, permissions));
+        } else {
+            result = new Result(ResultCode.SUCCESS, new UserInitResult(user));
+        }*/
+
     }
+
+   /* public static void main(String[] args) {
+        System.out.println(new Md5Hash("123456", "13800000003", 3).toString());
+    }*/
 }

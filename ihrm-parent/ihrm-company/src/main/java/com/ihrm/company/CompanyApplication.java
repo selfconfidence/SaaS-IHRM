@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
  * @create 2019年08月03号:17点05分
  * @mailbox mynameisweiyan@gmail.com
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.ihrm"})
 @EntityScan("com.ihrm.domain")
 public class CompanyApplication {
     public static void main(String[] args) {
