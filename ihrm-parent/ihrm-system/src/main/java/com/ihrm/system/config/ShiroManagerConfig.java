@@ -110,7 +110,7 @@ public class ShiroManagerConfig {
     public SessionDAO sessionDAO(){
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
         redisSessionDAO.setRedisManager(redisManager);
-        //redisSessionDAO.setExpire(); redis 存储的过期时长
+        redisSessionDAO.setExpire(30*24*60*60); //redis 存储的过期时长
         return redisSessionDAO;
     }
     //配置Shiro Session 管理

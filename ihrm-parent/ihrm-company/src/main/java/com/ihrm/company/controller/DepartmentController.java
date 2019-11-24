@@ -62,4 +62,13 @@ public class DepartmentController extends BaseController {
 
            return new Result(ResultCode.SUCCESS,new DeptListResult(company,departmentList));
     }
+
+    /**
+     * 远程 Feign 调用提供的接口
+     */
+    @RequestMapping(value = "/department/search",method = RequestMethod.POST)
+    public Department searchDep(@RequestParam("code") String code,@RequestParam("companyId") String companyId){
+               Department department = departmentService.findByCodeAndCompanyId(code,companyId);
+                return department;
+    }
 }

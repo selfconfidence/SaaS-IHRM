@@ -1,10 +1,13 @@
 package com.ihrm.system.service;
 
 import com.ihrm.common.utils.IdWorker;
+import com.ihrm.domain.Department;
 import com.ihrm.domain.Role;
 import com.ihrm.domain.User;
+import com.ihrm.domain.response.EmployeeReportResult;
 import com.ihrm.system.dao.RoleDao;
 import com.ihrm.system.dao.UserDao;
+import com.ihrm.system.feign.DepartmentFeign;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,6 +40,12 @@ public class UserService {
 
     @Autowired
     private RoleDao roleDao;
+
+    @Autowired
+    private DepartmentFeign departmentFeign;
+
+    private  final  Map<String,Department> tempMap = new HashMap();
+
 
     /**
      * 根据ID查询
@@ -139,5 +148,38 @@ public class UserService {
     public User findByPhone(String phone) {
 
         return userDao.findByMobile(phone);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void saves(List<User> users,String companyId,String companyName){
+        Date createTime = new Date();
+        users.forEach(user -> {
+            user.setId(idWorker.nextId());
+            user.setLevel("user");
+            user.setCreateTime(createTime);
+            user.setFormOfEmployment(1);
+            user.setPassword(new Md5Hash("123456",user.getMobile(),3).toString());
+            user.setEnableState(1);
+            user.setCompanyId(companyId);
+            user.setCompanyName(companyName);
+            Department department = tempMap.get(user.getDepartmentId());
+            if (department == null) {
+                department = departmentFeign.searchDep(user.getDepartmentId(), companyId);
+                if (department != null){
+                    user.setDepartmentId(department.getId());
+                    user.setDepartmentName(department.getName());
+                    tempMap.put(user.getDepartmentId(),department);
+                }
+
+            }else{
+               user.setDepartmentId(department.getId());
+               user.setDepartmentName(department.getName());
+            }
+            userDao.save(user);
+        });
+    }
+
+    public List<EmployeeReportResult> findByEmployeeResult(String month, String companyId) {
+       return userDao.findByEmployeeResult(month+"%",companyId);
     }
 }

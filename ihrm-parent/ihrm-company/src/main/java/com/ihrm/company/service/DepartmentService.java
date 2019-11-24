@@ -67,4 +67,7 @@ public class DepartmentService extends BaseService<Department>{
         department.setId(idWorker.nextId());
         departmentDao.save(department);}
 
+    public Department findByCodeAndCompanyId(String code, String companyId) {
+        return departmentDao.findByCodeAndCompanyId(code,companyId);
+    }
 }

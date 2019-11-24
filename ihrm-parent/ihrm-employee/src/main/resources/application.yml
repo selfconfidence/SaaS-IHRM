@@ -1,0 +1,28 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6868/eureka/
+feign:
+  hystrix:
+    enabled: false
+server:
+  port: 9003
+spring:
+  application:
+    name: ihrm-employe #指定服务名
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.237.128:3306/saas_ihrm?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 12345
+  #3.JPA
+  jpa:
+    database: MySQL
+    show-sql: true
+    open-in-view: true
+  redis:
+    host: 192.168.237.128
+    port: 6379
+    database: 0
+
+
