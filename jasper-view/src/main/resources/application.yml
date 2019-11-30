@@ -1,0 +1,15 @@
+
+#服务配置
+server:
+  port: 818
+#spring配置
+spring:
+  #1.应用配置
+  application:
+    name: jasper-view #指定服务名
+  #2.数据库连接池
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.237.128:3306/saas_ihrm?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 12345

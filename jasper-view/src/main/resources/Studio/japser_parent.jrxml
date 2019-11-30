@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.0.final using JasperReports Library version 6.5.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="japser_parent" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3d037925-b1f1-4ba7-ae6b-d5db2dc1cd62">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="subPath" class="java.lang.String"/>
+	<parameter name="subList" class="java.util.List"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="210" y="24" width="142" height="30" uuid="0f57b8f1-7cb5-40fa-97a5-bdbb84a62a34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体"/>
+				</textElement>
+				<text><![CDATA[父子报表-载体为:charts]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="247" splitType="Stretch">
+			<subreport>
+				<reportElement x="177" y="23" width="200" height="200" uuid="210b3773-47c3-4180-b09c-d6667c0b7d50"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{subList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{subPath}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
