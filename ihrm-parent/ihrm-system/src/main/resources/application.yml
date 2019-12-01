@@ -28,4 +28,11 @@ spring:
     host: 192.168.237.128
     port: 6379
     database: 0
+ ## 百度云人脸识别配置
+ai:
+ appId: 17899931
+ apiKey: gttEvQPH7fyrb1DprkvRCcoG
+ secretKey: MmH3oeVvUxAijf64meGzLIUf8FXOQhTN
+ imageType: BASE64
+ groupId: face_Identify
 

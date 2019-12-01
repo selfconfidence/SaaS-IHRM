@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -381,5 +382,16 @@ public class UserController extends BaseController {
     @RequestMapping(value = "findByEmployeeResult/{month}",method = RequestMethod.GET)
     public List<EmployeeReportResult> findByEmployeeResult(@PathVariable("month") String month,@RequestParam("companyId")String companyId){
         return userService.findByEmployeeResult(month, companyId);
+    }
+
+    /**
+     * 头像上传,使用BASE64 编码存储
+     */
+
+    @RequestMapping(value = "upload/{userId}",method = RequestMethod.GET)
+    public Result upload(@PathVariable("userId") String userId,@RequestParam("file") MultipartFile file) throws IOException {
+        String image = userService.imageBase64(userId,file);
+        return new Result(ResultCode.SUCCESS,image);
+
     }
 }

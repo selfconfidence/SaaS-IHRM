@@ -9,6 +9,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -195,5 +196,31 @@ public class JasperController {
         list.addFirst(chartsCount2);
 
         return list;
+    }
+
+    /**
+     * 采用父子报表图形展示
+     */
+
+    @RequestMapping("/{id}/pdf")
+    public void pdf(@PathVariable("id") String id, HttpServletResponse response){
+
+        try {
+            Resource resource = new ClassPathResource("templates/profile.jasper");
+            HashMap<String, Object> objectObjectHashMap = new HashMap<>();
+            objectObjectHashMap.put("userId",id);
+            objectObjectHashMap.put("staffPhoto","https://nuxt-vue.oss-cn-beijing.aliyuncs.com/2018-09-18_201715.png");
+            objectObjectHashMap.put("userName","张三");
+            objectObjectHashMap.put("workCart","北京");
+            objectObjectHashMap.put("workNum","77years");
+            objectObjectHashMap.put("workType","123123");
+            objectObjectHashMap.put("workContent","你猜我画");
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(), objectObjectHashMap, new JREmptyDataSource());
+            JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

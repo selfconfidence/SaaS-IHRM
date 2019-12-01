@@ -137,19 +137,22 @@ public class OssFileOptions  {
 
     }
 
-/*    public static void main(String[] args)throws Exception {
+    public static void main(String[] args)throws Exception {
 
 
-                Map map = ossFileUpload(new FileInputStream(new File("F:\\c语言\\C语言资料\\c基础\\07函数\\3_视频\\01_复习01.mp4")), "01_复习01.mp4");
+                Map map = ossFileUpload(new FileInputStream(new File("C:\\Users\\asus\\Pictures\\Camera Roll\\timg.gif")), "timg.gif");
         System.err.println(map);
 
-         *//* String s = "1.jpg";
+          String s = "1.jpg";
         String substring = s.substring(s.lastIndexOf("."), s.length());
         System.out.println(substring);
         Path path = Paths.get(s);
-        System.out.println(Files.probeContentType(path));*//*
+        System.out.println(Files.probeContentType(path));
         System.err.println("1");
+        InputStream inputStream = new FileInputStream(new File("C:\\Users\\asus\\Pictures\\Camera Roll\\timg.gif"));
 
-    }*/
+        System.out.println(new QiniuUploadUtil().upload("timg.gif", inputStream));
+
+    }
 
 }

@@ -110,6 +110,9 @@ public class User implements Serializable {
     //标识是否是特定管理员
     private String level;
 
+   // 用户头像 base64 编码存储  MEDIUMTEXT-- 数据库属性
+    private String staffPhoto;
+
 
     @ManyToMany
     @JsonIgnore

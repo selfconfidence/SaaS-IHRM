@@ -16,11 +16,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -181,5 +184,13 @@ public class UserService {
 
     public List<EmployeeReportResult> findByEmployeeResult(String month, String companyId) {
        return userDao.findByEmployeeResult(month+"%",companyId);
+    }
+
+    public String imageBase64(String userId, MultipartFile file) throws IOException {
+        User user = userDao.findById(userId).get();
+        String image = "data:image/png;base64,"+(new BASE64Encoder().encode(file.getBytes()));
+     user.setStaffPhoto(image);
+     userDao.saveAndFlush(user);
+     return image;
     }
 }

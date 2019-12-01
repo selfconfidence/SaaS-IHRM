@@ -89,6 +89,9 @@ public class UserResult implements Serializable {
 
     private String departmentName;
 
+    // 用户头像 base64 编码存储  MEDIUMTEXT-- 数据库属性
+    private String staffPhoto;
+
     private List<String> roleIds = new ArrayList<>();
 
     public UserResult(User user) {
