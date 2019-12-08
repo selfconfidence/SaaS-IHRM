@@ -7,21 +7,23 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.util.Date;
 
+@Component
 public class QiniuUploadUtil {
 
-    private static final String accessKey = "COuoDRVa7JLsuurzIvQSI_pEDceHDw3yGfJEmvwv";
-    private static final String secretKey = "3RWpTjB5Jxg3QosUFr4mxbHXJ5JR2m6AHQqYsSlr";
-    private static final String bucket = "ihrm-bucket";
-    private static final String prix = "http://pkbivgfrm.bkt.clouddn.com/";
+    private static final String accessKey = "r8vHhzhe5h-T_Vp58tj2z0ZBsnkzxkQpyVi_txYQ";
+    private static final String secretKey = "dI-oEd68M57IpFWnfEbq5BVRKxTOLOovDpij0hLD";
+    private static final String bucket = "imagespance";
+    private static final String prix = "http://q1m26hzo5.bkt.clouddn.com/";
     private UploadManager manager;
 
     public QiniuUploadUtil() {
-        //初始化基本配置
-        Configuration cfg = new Configuration(Zone.zone0());
+        //初始化基本配置                          //华南地区
+        Configuration cfg = new Configuration(Zone.zone2());
         //创建上传管理器
         manager = new UploadManager(cfg);
     }

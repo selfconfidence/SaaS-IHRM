@@ -39,6 +39,15 @@ public class BaiduAiUtil {
     }
 
     /**
+     * 人脸搜索
+     */
+    public Boolean faceExist(String userId) throws JSONException {
+        JSONObject res = client.getUser(userId, IMAGE_TYPE, null);
+        Integer errorCode = res.getInt("error_code");
+        return errorCode == 0 ? true : false;
+    }
+
+    /**
      *  人脸注册 ：将用户照片存入人脸库中
      */
     public Boolean faceRegister(String userId, String image) throws JSONException {

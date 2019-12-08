@@ -84,6 +84,7 @@ public class ShiroManagerConfig {
         Map<String,String> filterMap = new LinkedHashMap<>();
         filterMap.put("/sys/login","anon");
         filterMap.put("/autherror","anon");
+        filterMap.put("/sys/faceLogin/**","anon");
         filterMap.put("/**","authc");
         sf.setFilterChainDefinitionMap(filterMap);
         return sf;

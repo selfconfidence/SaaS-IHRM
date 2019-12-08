@@ -1,6 +1,8 @@
 package com.ihrm.system.service;
 
+import com.ihrm.common.utils.BaiduAiUtil;
 import com.ihrm.common.utils.IdWorker;
+import com.ihrm.common.utils.QiniuUploadUtil;
 import com.ihrm.domain.Department;
 import com.ihrm.domain.Role;
 import com.ihrm.domain.User;
@@ -46,6 +48,14 @@ public class UserService {
 
     @Autowired
     private DepartmentFeign departmentFeign;
+
+    @Autowired
+    private QiniuUploadUtil qiniuUploadUtil;
+
+    @Autowired
+    private BaiduAiUtil baiduAiUtil;
+
+
 
     private  final  Map<String,Department> tempMap = new HashMap();
 
@@ -189,8 +199,27 @@ public class UserService {
     public String imageBase64(String userId, MultipartFile file) throws IOException {
         User user = userDao.findById(userId).get();
         String image = "data:image/png;base64,"+(new BASE64Encoder().encode(file.getBytes()));
-     user.setStaffPhoto(image);
-     userDao.saveAndFlush(user);
-     return image;
+         user.setStaffPhoto(image);
+         userDao.saveAndFlush(user);
+           return image;
+    }
+
+    public String upLoadImage(String userId, MultipartFile file) throws IOException {
+        User user = userDao.findById(userId).get();
+
+        String imageAddr = qiniuUploadUtil.upload(file.getOriginalFilename(), file.getInputStream());
+        Boolean flag = baiduAiUtil.faceExist(userId);
+        String image_ai = new BASE64Encoder().encode(file.getBytes());
+        if (flag){
+            //更新
+            baiduAiUtil.faceUpdate(userId,image_ai);
+        }else {
+            //新增
+            baiduAiUtil.faceRegister(userId,image_ai);
+        }
+        user.setStaffPhoto(imageAddr);
+        userDao.saveAndFlush(user);
+        return imageAddr;
+
     }
 }

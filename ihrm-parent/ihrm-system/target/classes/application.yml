@@ -1,3 +1,10 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6868/eureka/
+feign:
+  hystrix:
+    enabled: true
 #服务配置
 server:
   port: 9002
@@ -18,7 +25,19 @@ spring:
     show-sql: true
     open-in-view: true
   redis:
-    host: 127.0.0.1
+    host: 192.168.237.128
     port: 6379
     database: 0
+  servlet:
+    multipart:
+      max-file-size: 5MB
+ ## 百度云人脸识别配置
+ai:
+ appId: 17899931
+ apiKey: gttEvQPH7fyrb1DprkvRCcoG
+ secretKey: MmH3oeVvUxAijf64meGzLIUf8FXOQhTN
+ imageType: BASE64
+ groupId: face_Identify
+qr:
+ url: http://127.0.0.1:8080/#/facelogin
 

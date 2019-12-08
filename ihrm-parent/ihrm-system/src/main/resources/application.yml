@@ -28,6 +28,9 @@ spring:
     host: 192.168.237.128
     port: 6379
     database: 0
+  servlet:
+    multipart:
+      max-file-size: 5MB
  ## 百度云人脸识别配置
 ai:
  appId: 17899931
@@ -35,4 +38,6 @@ ai:
  secretKey: MmH3oeVvUxAijf64meGzLIUf8FXOQhTN
  imageType: BASE64
  groupId: face_Identify
+qr:
+ url: http://127.0.0.1:8080/#/facelogin
 

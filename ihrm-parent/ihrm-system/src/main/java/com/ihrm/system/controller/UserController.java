@@ -6,12 +6,10 @@ import com.ihrm.common.entity.Result;
 import com.ihrm.common.entity.ResultCode;
 import com.ihrm.common.utils.ExcelExportUtil;
 import com.ihrm.common.utils.ExcelImportUtil;
-import com.ihrm.common.utils.JwtUtils;
 import com.ihrm.domain.User;
 import com.ihrm.domain.response.EmployeeReportResult;
 import com.ihrm.domain.response.UserResult;
 import com.ihrm.system.feign.DepartmentFeign;
-import com.ihrm.system.service.PermissionService;
 import com.ihrm.system.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -46,11 +44,8 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JwtUtils jwtUtils;
 
-    @Autowired
-    private PermissionService permissionService;
+
 
     /**
      * 分配角色
@@ -385,13 +380,25 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 头像上传,使用BASE64 编码存储
+     * 1.头像上传,使用BASE64 编码存储
+     */
+
+/*    @RequestMapping(value = "upload/{userId}",method = RequestMethod.GET)
+    public Result upload(@PathVariable("userId") String userId,@RequestParam("file") MultipartFile file) throws IOException {
+        String image = userService.imageBase64(userId,file);
+        return new Result(ResultCode.SUCCESS,image);
+    }*/
+
+    /**
+     * 2.头像上传,使用七牛云存储
+     *        百度AI实时同步人脸库,用来人脸识别
+     *            更新
+     *            新增
      */
 
     @RequestMapping(value = "upload/{userId}",method = RequestMethod.GET)
     public Result upload(@PathVariable("userId") String userId,@RequestParam("file") MultipartFile file) throws IOException {
-        String image = userService.imageBase64(userId,file);
-        return new Result(ResultCode.SUCCESS,image);
-
+        String imageAddr = userService.upLoadImage(userId,file);
+        return new Result(ResultCode.SUCCESS,imageAddr);
     }
 }

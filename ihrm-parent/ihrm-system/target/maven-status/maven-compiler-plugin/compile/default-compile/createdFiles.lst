@@ -1,6 +1,7 @@
+com\ihrm\system\config\ShiroManagerConfig.class
 com\ihrm\system\config\SystemConfig.class
 com\ihrm\system\dao\PermissionPointDao.class
-com\ihrm\system\result\UserInitResult.class
+com\ihrm\system\listener\RedisKeyExpirationListener.class
 com\ihrm\system\service\PermissionService$1.class
 com\ihrm\system\controller\PermissionController.class
 com\ihrm\system\service\PermissionService.class
@@ -12,6 +13,8 @@ com\ihrm\system\controller\UserController.class
 com\ihrm\system\dao\PermissionApiDao.class
 com\ihrm\system\dao\RoleDao.class
 com\ihrm\system\dao\PermissionMenuDao.class
+com\ihrm\system\shiro\UserRealm.class
+com\ihrm\system\config\RedisListenerConfig.class
 com\ihrm\system\SystemApplication.class
 com\ihrm\system\controller\RoleController.class
 com\ihrm\system\dao\PermissionDao.class
